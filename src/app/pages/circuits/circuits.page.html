@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>circuits</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-searchbar [(ngModel)]="searchTerm" (ionChange)="searchChanged($event)"></ion-searchbar>
+
+	<ion-item>
+		<ion-label>Select Searchtype</ion-label>
+			<ion-select [(ngModel)]="type" (ionChange)="searchChanged($event)">
+			  <ion-select-option value="">All</ion-select-option>
+			  <ion-select-option value="Sunchine">Sunchine</ion-select-option>
+			  <ion-select-option value="Alone">Alone</ion-select-option>
+			  <ion-select-option value="Dream">Dream</ion-select-option>
+		</ion-select>
+	</ion-item>
+  
+	<ion-list>
+ 
+    <ion-item button *ngFor="let item of (results | async)"  [routerLink]="['/','circuit-details', item.id]">
+      <ion-avatar slot="start">
+        <img [src]="item.image1" *ngIf="item.Poster != 'N/A'">
+      </ion-avatar>
+ 
+      <ion-label text-wrap>
+        <h3>{{ item.destination }}</h3>
+        {{ item.circuit_commence | date:'dd/MM/yyyy'}} - {{ item.circuit_fini |  date:'dd/MM/yyyy'}}
+      </ion-label>
+	  <ion-icon slot="end" name="airplane-outline"></ion-icon>
+ 
+    </ion-item>
+ 
+  </ion-list>
+</ion-content>

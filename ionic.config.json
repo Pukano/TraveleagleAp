@@ -1,0 +1,7 @@
+{
+  "name": "traveleagleApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
