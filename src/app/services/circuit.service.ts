@@ -7,11 +7,9 @@ import { catchError, retry } from 'rxjs/operators';
 
 export enum SearchType {
 	all = '',
-	Sunchine = 'Sunchine',
-	Alone = 'Alone',
-	Dream = 'Dream' 
+	all_inclusive = 'All inclusive',
+	petit_dejeuner = 'Petit déjeuner'
 }
-
 @Injectable({
   providedIn: 'root'
 })
@@ -22,6 +20,31 @@ export class CircuitService {
 	baseUrl = 'http://traveleagle.pythonanywhere.com/travelegg/';
 	//token='';
 	constructor(private http: HttpClient) { }
+	
+	doGetRequest(url,token):Observable<any>{
+		const httpOptions = {
+			headers: new HttpHeaders({
+			'Content-Type':  'application/json',
+			'Authorization': 'Bearer ' + token
+			})
+		};
+		console.log('header',httpOptions);
+		return Observable.create(observer => {
+		// At this point make a request to your backend to make a real check!
+		console.log("on appelle BACKEND encoded url " + url);
+		this.http.get(url, httpOptions)
+		.pipe(retry(1))
+		.subscribe(res => {
+			console.log('RES ',res);
+		  observer.next(res);
+		  observer.complete();
+		}, error => {
+		  observer.next();
+		  observer.complete();
+		  console.log(error);// Error getting the data
+		});
+		});
+	}
   /**
 	This method  do angular RestAPI call for retrieving auth token
 	example request: Get http://traveleagle.herokuapp.com/API/?id=1&token=ASD514561456sad145sadasS
@@ -40,30 +63,10 @@ export class CircuitService {
 	to Get all Circuits
   */
     getAllCircuits(token): Observable<any> {
-		console.log('token to auth','JWT '+token);
+	console.log('token to auth','JWT '+token);
 	let apiCirrcuit='api_circuit/';
 	let url = `${this.baseUrl}${apiCirrcuit}`;
-	const httpOptions = {
-		headers: new HttpHeaders({
-		'Content-Type':  'application/json',
-		'Authorization': 'Bearer ' + token
-		})
-	};
-	console.log('header',httpOptions);
-	  return Observable.create(observer => {
-      // At this point make a request to your backend to make a real check!
-      console.log("on appelle BACKEND encoded url " + url);
-      this.http.get(url, httpOptions)
-        .pipe(retry(1))
-        .subscribe(res => {
-          observer.next(res);
-          observer.complete();
-        }, error => {
-          observer.next();
-          observer.complete();
-          console.log(error);// Error getting the data
-        });
-    });
+	return this.doGetRequest(url,token);
   }
   /**
 	This method  do angular RestAPI call to baseUrl with parameter id and token
@@ -72,30 +75,11 @@ export class CircuitService {
     getCircuitDetails(id,token) {
 	let apiCircuit='api_circuit/';
 	let url = `${this.baseUrl}${apiCircuit}/${id}`;
-	console.log('request to:',url);
-	const httpOptions = {
-		headers: new HttpHeaders({
-		'Content-Type':  'application/json',
-		'Authorization': 'Bearer ' + token
-		})
-	};
-	console.log('header',httpOptions);
-	  return Observable.create(observer => {
-      // At this point make a request to your backend to make a real check!
-      console.log("on appelle BACKEND encoded url " + url);
-      this.http.get(url, httpOptions)
-        .pipe(retry(1))
-        .subscribe(res => {
-          observer.next(res);
-          observer.complete();
-        }, error => {
-          observer.next();
-          observer.complete();
-          console.log(error);// Error getting the data
-        });
-    });
+	return this.doGetRequest(url,token);
+	
   }
-  
+  //map(circuits => circuits.filter(circuit =>
+//	 circuit.nourriture.toLowerCase()== "All inclusive"))
   searchData(title: string, type: SearchType): Observable<any> {
 	let apiCirrcuit='api_cirrcuit/';
 	let url = '${this.baseUrl}/';
