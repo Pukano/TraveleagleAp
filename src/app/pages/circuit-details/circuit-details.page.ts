@@ -21,14 +21,11 @@ export class CircuitDetailsPage implements OnInit {
 		// Get the ID and Token that was passed with the URL
 		let id = this.activatedRoute.snapshot.paramMap.get('id');
 		this.storage.get('accessToken').then((result) => {
-			console.log('token ', result);
 			this.token = result;
-			console.log('this token ', this.token);
 			//this.information = this.circuitService.getCircuitDetails(id,this.token);
 			this.circuitService.getCircuitDetails(id,this.token).subscribe(
 				result => {
-					console.log('response ',result );
-					this.information = result ;
+					this.information = result;
 				},
 				error => console.log('error',error)
 			  );

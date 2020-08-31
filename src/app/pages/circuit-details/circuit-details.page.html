@@ -24,23 +24,32 @@
       {{ information.description }}
  
       <ion-item lines="none">
-		<ion-icon name="logo-euro"></ion-icon>
-        <ion-label>{{ information.prix }} </ion-label>
+        <ion-label> Prix: {{ information.prix }} Eur</ion-label>
       </ion-item>
 	  
 	   <ion-item lines="none">
 	  <ion-icon name="restaurant-outline"></ion-icon>
-        <ion-label>{{ information.nourriture }} </ion-label>
+        <ion-label>Formule: {{ information.nourriture }} </ion-label>
       </ion-item>>
  
       <ion-item lines="none">
-        <ion-icon name="clipboard" slot="start"></ion-icon>
+        <ion-icon name="clipboard"></ion-icon>
         <ion-label text-wrap>{{ information.circuit_commence | date:'dd/MM/yyyy'}} - {{ information.circuit_fini |  date:'dd/MM/yyyy'}}</ion-label>
       </ion-item>
  
       <ion-item lines="none">
         <ion-icon name="people-circle-outline"></ion-icon>
-        <ion-label text-wrap>{{ information.duree }}</ion-label>
+        <ion-label text-wrap>Durée: {{ information.duree }} jours</ion-label>
+      </ion-item>
+	  
+	  <ion-item lines="none">
+        <ion-icon name="airplane-outline"></ion-icon>
+        <ion-label text-wrap>Départ: {{ information.ville_dep }} </ion-label>
+      </ion-item> 
+	  
+	  <ion-item lines="none">
+        <ion-icon name="airplane-outline"></ion-icon>
+        <ion-label text-wrap>Ville: {{ information.ville_arr}}</ion-label>
       </ion-item>
  
       <ion-button expand="full" (click)="openWebsite()" *ngIf="information.Website && information.Website != 'N/A'">

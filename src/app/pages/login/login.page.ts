@@ -15,26 +15,29 @@ export class LoginPage implements OnInit {
   constructor(private authService: AuthService, private router: Router, private storage: Storage ) { }
 
   ngOnInit() {
-	  
-	this.storage.set('accessToken', 'aa');
-	this.storage.set('refreshToken', 'ee');
-	  this.login = {
-		  username: '',
-		  password: ''
-	  };
-	  
+	 //init variables with empty values 
+	this.storage.set('accessToken', '');
+	this.storage.set('refreshToken', '');
+	this.login = {
+		username: '',
+		password: ''
+	};	  
   }
+  //Method for login
   loginUser(form) {
-	  console.log("form ",form.value);
 	  this.login.username = form.value.username;
-	  this.login.password = form.value.password;
+	  this.login.password = this.authService.passwordHash(form.value.password);
 	  this.authService.loginUser(this.login).subscribe(
 		response => {
-			console.log('response ',response);
-			console.log('acces token ',response.access);
-			this.storage.set('accessToken', response.access);
-			this.storage.set('refreshToken', response.refresh);
-			this.router.navigateByUrl('circuits/');
+			if(response.access){
+				this.storage.set('accessToken', response.access);
+				this.storage.set('refreshToken', response.refresh);
+				this.router.navigateByUrl('circuits/');
+			}
+			else {		
+				alert('Bad username or password for ' + this.login.username + ' !');			
+				console.log('response ', response);
+			}
 		},
 		error => console.log('error',error)
 	  );

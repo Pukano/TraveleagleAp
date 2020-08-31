@@ -23,13 +23,19 @@ export class RegisterPage implements OnInit {
 	  console.log("form ",form.value);
 	  this.register.username = form.value.username;
 	  this.register.email = form.value.email;
-	  this.register.password = form.value.password;
-	  this.authService.registerUser(this.register).subscribe(
+	  this.register.password = this.authService.passwordHash(form.value.password);
+	  let result = this.authService.registerUser(this.register).subscribe(
 		response => {
-			alert('User' + this.register.username + ' has been created!');
-			this.router.navigateByUrl('login');
+			if(response.email){
+				alert('User ' + this.register.username + ' has been created!');
+				this.router.navigateByUrl('login');
+			}
+			else {
+				console.log('response',response);
+				alert('User ' + this.register.username + ' has not been created! Please try again');				
+			}
 		},
-		error => console.log('error',error)
+		error => {console.log('error1',error);}
 	  );
   }
 

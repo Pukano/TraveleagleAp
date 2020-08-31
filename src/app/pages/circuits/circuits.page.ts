@@ -12,60 +12,29 @@ import { map, filter } from 'rxjs/operators';
   templateUrl: './circuits.page.html',
   styleUrls: ['./circuits.page.scss'],
 })
+/**
+This is the base class for circuit page
+*/
 export class CircuitsPage implements OnInit {
-	results: Observable<any>;
-	searchTerm: string = '';
-	type: SearchType = SearchType.all;
-	token:String;
+	results: Observable<any>;	//result data which are shown on page. Here are the downloaded Cicuits
+	searchTerm: string = '';	//Search term to allow search in ceircuits. Default is empty to show all results
+	type: SearchType = SearchType.all; //defined choosable search term. Default is all to show all results
+	token:String;			//JWT Bearer access token variable
 
 	constructor(private circuitService: CircuitService,private activatedRoute: ActivatedRoute, private storage: Storage) { }
 	
-
+	//tihs funcion is run as the first on initialization o page
 	ngOnInit() {
-		//console.log('params ',this.activatedRoute.snapshot.paramMap);
+		// Get the token from staorage and set the data into Results to be showed on page
 		this.storage.get('accessToken').then((result) => {
-			console.log('token ', result);
-			this.token = result;
-			
-			console.log('this token ', this.token);
-			this.circuitService.getAllCircuits(this.token).subscribe();
+			this.token = result;			
 			this.results = this.circuitService.getAllCircuits(this.token);
-			console.log('data ',this.results);
-			
-			this.circuitService.getAllCircuits(this.token).subscribe(
-				response => {
-					console.log('response ',response);
-				},
-				error => console.log('error',error)
-			  );
 		});
 		
 	}
-	/*getCircuits(){
-		// Call our service function which returns an Observable
-		this.results = this.circuitService.getAllCircuits(this.token);
-	}*/
 	searchChanged() {
-		// Call our service function which returns an Observable
-		this.results = this.circuitService.getAllCircuits(this.token);
-		this.results = this.results.pipe(
-			map((reports: any[]) => reports.filter(p => {
-				if (p.nourriture.indexOf(this.type) > -1) {				
-					return p; 
-				}
-			}))
-		);
-		console.log('st',this.searchTerm);
-		if(this.searchTerm.length > 0){
-			console.log('st',this.searchTerm);
-			this.results = this.results.pipe(
-			map((reports: any[]) => reports.filter(p => {
-				if (p.destination.toLowerCase().includes(this.searchTerm.toLowerCase())) {				
-					return p; 
-				}
-			}))
-		);
-		}
+		// Call our service function which returns actualy searched data
+		this.results = this.circuitService.searchData(this.searchTerm, this.type, this.token);
 	}
 	
 }
