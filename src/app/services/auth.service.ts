@@ -9,7 +9,7 @@ import CryptoJS from 'crypto-js';
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl = 'http://traveleagle.pythonanywhere.com/';
+  baseUrl = 'https://traveleagle.pythonanywhere.com/';
   
   constructor(private http: HttpClient) { }
   doPostRequest(url, data){
@@ -29,21 +29,22 @@ export class AuthService {
         });
     });
   }
+  
   //Registration API
   registerUser(userData){
-	let url = `${this.baseUrl}auth/users/`;
-	let data = JSON.stringify(userData);
-	 
-	return this.doPostRequest(url,data);
+    let url = `${this.baseUrl}auth/users/`;
+    let data = JSON.stringify(userData);
+    
+    return this.doPostRequest(url,data);
   }
   //LOGIN API
-    loginUser(userData){
-	  let url = `${this.baseUrl}api/auth/token/`;
-	  let data = {
+  loginUser(userData){
+    let url = `${this.baseUrl}api/auth/token/`;
+    let data = {
             "username": userData.username,
-			"password": userData.password
-        };
-	  return this.doPostRequest(url, data);
+        "password": userData.password
+          };
+    return this.doPostRequest(url, data);
   }
   //Function for password Hashing
   passwordHash(password){

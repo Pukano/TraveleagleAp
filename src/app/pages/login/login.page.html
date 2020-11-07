@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title>Traveleagle</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,18 +10,18 @@
       <ion-row color="primary" justify-content-center>
         <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
           <div text-center>
-            <h3>Login</h3>
+            <h3>Connexion</h3>
           </div>
           <div padding>
             <ion-item>
-              <ion-input name="username" type="text" placeholder="username" ngModel required></ion-input>
+              <ion-input name="username" type="text" placeholder="Identifiant" ngModel required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+              <ion-input name="password" type="password" placeholder="Mot de passe" ngModel required></ion-input>
             </ion-item>
           </div>
           <div padding>
-            <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Login</ion-button>
+            <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Se connecter</ion-button>
           </div>
         </ion-col>
       </ion-row>
@@ -29,8 +29,8 @@
   </form>
 	<ion-row>
 		<div text-center>
-			If you don't have an account, please 
-			<ion-router-link color="warning" href="/register" class="underline ios ion-activatable hydrated">Register! </ion-router-link>
+      Si vous n'avez pas de compte, veuillez vous 
+			<ion-router-link color="warning" href="/register" class="underline ios ion-activatable hydrated">Inscrire! </ion-router-link>
 		</div>
 	</ion-row>
 </ion-content>

@@ -35,7 +35,7 @@ export class LoginPage implements OnInit {
 				this.router.navigateByUrl('circuits/');
 			}
 			else {		
-				alert('Bad username or password for ' + this.login.username + ' !');			
+				alert("Nom d'utilisateur ou mot de passe incorrect " + this.login.username + ' !');			
 				console.log('response ', response);
 			}
 		},

@@ -20,7 +20,7 @@ export enum SearchType {
 	Circuit API class for data requesting
 */
 export class CircuitService {
-	baseUrl = 'http://traveleagle.pythonanywhere.com/travelegg/';
+	baseUrl = 'https://traveleagle.pythonanywhere.com/travelegg/';
 	
 	constructor(private http: HttpClient) { }
 	/**

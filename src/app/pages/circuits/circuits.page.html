@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>circuits</ion-title>
+    <ion-title>Circuits</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,10 +8,10 @@
 	<ion-searchbar [(ngModel)]="searchTerm" (ionChange)="searchChanged($event)"></ion-searchbar>
 
 	<ion-item>
-		<ion-label>Select Formule</ion-label>
+		<ion-label>Sélectionnez la formule</ion-label>
 			<ion-select [(ngModel)]="type" (ionChange)="searchChanged($event)">
 			  <ion-select-option value="">All</ion-select-option>
-			  <ion-select-option value="All inclusive">All inclusive</ion-select-option>
+			  <ion-select-option value="All inclusive">Tout Inclus</ion-select-option>
 			  <ion-select-option value="Petit déjeuner">Petit déjeuner</ion-select-option>
 		</ion-select>
 	</ion-item>
